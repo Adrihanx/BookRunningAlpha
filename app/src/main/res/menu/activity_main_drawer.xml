@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_nivel"
-            android:src="@drawable/ic_level"
+            android:icon="@drawable/ic_level"
             android:title="Niveles" />
         <item
             android:id="@+id/nav_playlist"
@@ -20,7 +20,7 @@
             android:title="Configuración" />
     </group>
 
-    <item android:title="Communicación">
+    <item android:title="Comunicación">
         <menu>
             <item
                 android:id="@+id/nav_share"
