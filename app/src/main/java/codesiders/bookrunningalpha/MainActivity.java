@@ -91,6 +91,15 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_nivel) {
             // Handle the camera action
+            LevelsFragment leadsFragment = (LevelsFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.levels_container);
+
+            if (leadsFragment == null) {
+                leadsFragment = LevelsFragment.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.levels_container, leadsFragment)
+                        .commit();
+            }
         } else if (id == R.id.nav_playlist) {
 
         } else if (id == R.id.nav_cuenta) {
