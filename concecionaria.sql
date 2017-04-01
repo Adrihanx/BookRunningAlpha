@@ -1,6 +1,12 @@
 drop database if exists BookRunning;
 create database BookRunning;
 	use BookRunning;
+	create table Bitacora(
+		Id_Bitacora varchar(20),
+		NombredeUsuario varchar(30) default 'no root',
+		Accion varchar(20),
+		ValorME varchar(20)
+	);
 	create table Usuario(
 		Nombre_Usuario varchar(30),
 		Correo varchar(60),
@@ -19,16 +25,11 @@ create database BookRunning;
 		Autor varchar(30),
 		Sinopsis text,
 		src_Audio varchar(20)default './default.mp3',
-		primary key (id_Historia)
-	);
-
-	create table Nivel(
 		No_Nivel int,
 		Vel_Minima int,
 		Objetivo text,
 		id_Historia int,
-		primary key (No_Nivel),
-		foreign key(id_Historia) references Historia(id_Historia)
+		primary key (id_Historia)
 	);
 
 	create table Registro(
@@ -43,24 +44,6 @@ create database BookRunning;
 		primary key(id_Registro),
 		foreign key (Nombre_Usuario) references Usuario(Nombre_Usuario),
 		foreign key (No_Nivel) references Nivel(No_Nivel)
-	);
-
-	create table Gratis(
-		Id_Historia int,
-		Regalo varchar(30),
-		Foreign key(Id_Historia) references Historia(id_Historia)
-	);
-
-	create table Pago(
-		Id_Historia int,
-		Precio varchar(30),
-		Foreign key(Id_Historia) references Historia(id_Historia)
-	);
-	create table Bitacora(
-		Id_Bitacora varchar(20),
-		NombredeUsuario varchar(30) default 'no root',
-		Accion varchar(20),
-		ValorME varchar(20)
 	);
 
 insert into Usuario values('Tabo style','tabo_style@outlook',43,'México','Qro',default,78,'sha1');
