@@ -47,7 +47,7 @@ create database BookRunning;
 		primary key(id_Registro),
 		foreign key (Nombre_Usuario) references Usuario(Nombre_Usuario)
 	);
-	<--- gfgfgfgfg --->
+	
 insert into Usuario values('Tabo style','tabo_style@outlook',43,'México','Qro',default,78,'sha1');
 insert into Usuario values('Laura Marin','Laura123@outlook',26,'México','Qro',default,59,'sha1');
 insert into Usuario values('Daniel Macotela','Daniel_117@outlook',19,'México','Qro',default,80,'sha1');
