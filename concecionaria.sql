@@ -70,6 +70,153 @@ insert into Registro values(15344,'Gerardo San','08-02-2017',6,6,3.42,12,300);
 
 
 
+DELIMITER |
+
+CREATE TRIGGER tr_insert_Bitacora 
+BEFORE 
+INSERT 
+ON 
+Bitacora
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+----------------
+DELIMITER |
+
+CREATE TRIGGER tr_update_Bitacora 
+BEFORE 
+update 
+ON 
+Bitacora
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+-------------------
+DELIMITER |
+
+CREATE TRIGGER tr_delete_Bitacora 
+BEFORE 
+deleta 
+ON 
+Bitacora
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+--------
+DELIMITER |
+
+CREATE TRIGGER tr_insert_Usuario
+BEFORE 
+insert 
+ON 
+Usuario
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+-------
+DELIMITER |
+
+CREATE TRIGGER tr_update_Usuario
+BEFORE 
+update 
+ON 
+Usuario
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+-------
+DELIMITER |
+
+CREATE TRIGGER tr_delete_Usuario
+BEFORE 
+delete 
+ON 
+Usuario
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+------
+DELIMITER |
+
+CREATE TRIGGER tr_insert_Registro
+BEFORE 
+insert 
+ON 
+Registro
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+----
+DELIMITER |
+
+CREATE TRIGGER tr_update_Registro
+BEFORE 
+update 
+ON 
+Registro
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+-----
+DELIMITER |
+
+CREATE TRIGGER tr_delete_Registro
+BEFORE 
+delete 
+ON 
+Registro
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora values(now());
+END
+
+|
+
+DELIMITER ;
+
+
+
+
 
 
 
