@@ -67,7 +67,7 @@ insert into Registro values(13782,'Adrihanx','15-03-2017',1,3,2.07,7.92,100);
 insert into Registro values(15344,'Gerardo San','08-02-2017',6,6,3.42,12,300);
 
 
-
+---
 
 
 DELIMITER |
