@@ -5,6 +5,7 @@ create database BookRunning;
 	create table Bitacora(
 		Id_Bitacora int,
 		NombredeUsuario varchar(30) default 'no root',
+		Fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		Accion varchar(20),
 		ValorActualizado varchar(30) null,
 		ValorEliminado varchar(30) null
@@ -49,3 +50,24 @@ create database BookRunning;
 		foreign key (Nombre_Usuario) references Usuario(Nombre_Usuario)
 	);
 
+DELIMITER |
+
+CREATE TRIGGER tr_update_Bitacora 
+BEFORE 
+INSERT 
+ON 
+Usuario
+FOR EACH ROW
+BEGIN
+
+    update Bitacora set NombredeUsuario = '';
+	insert into Bitacora set Fecha DEFAULT; 
+	update Bitacora set Accion = 'Se actualiso';
+	update Bitacora set ValorActualizado = new.Nombre_Usuario;
+END;
+
+|
+
+DELIMITER ;
+
+<--- gfgfgfgfg --->
