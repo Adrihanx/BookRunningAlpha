@@ -104,7 +104,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_playlist) {
 
         } else if (id == R.id.nav_cuenta) {
+            Map Mapa =(Map) getSupportFragmentManager().findFragmentById(R.id.levels_container);
 
+            if (Mapa == null) {
+                Mapa = Map.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.levels_container, Mapa)
+                        .commit();
+            }
         } else if (id == R.id.nav_configuracion) {
 
         }
