@@ -49,24 +49,3 @@ create database BookRunning;
 		foreign key (Nombre_Usuario) references Usuario(Nombre_Usuario)
 	);
 
-
-	DELIMITER |
-
-CREATE TRIGGER tr_update_Bitacora 
-BEFORE 
-INSERT 
-ON 
-Usuario
-FOR EACH ROW
-BEGIN
-
-    update Bitacora set NombredeUsuario = '';
-	update Bitacora set Fecha(now()); 
-	update Bitacora set Accion = 'Se actualiso';
-	update Bitacora set ValorActualizado = new.Nombre_Usuario;
-END;
-
-|
-
-DELIMITER ;
-
