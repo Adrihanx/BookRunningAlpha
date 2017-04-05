@@ -9,6 +9,7 @@ create database BookRunning;
 		Accion varchar(20),
 		ValorActualizado varchar(30) null,
 		ValorEliminado varchar(30) null,
+		TablaAccion varchar(30) null,
 		PRIMARY KEY (Id_Bitacora)
 	);
 	create table Usuario(
@@ -24,7 +25,7 @@ create database BookRunning;
 	);
 
 	create table Historia(
-		id_Historia int,
+		id_Historia int NOT NULL AUTO_INCREMENT,
 		Duracion time,
 		Genero varchar(30),
 		Autor varchar(30),
@@ -39,7 +40,7 @@ create database BookRunning;
 	
 
 	create table Registro(
-		id_Registro int,
+		id_Registro int NOT NULL AUTO_INCREMENT,
 		Nombre_Usuario varchar(30),
 		Fecha date,
 		Km_recoridos int,
@@ -56,10 +57,35 @@ create database BookRunning;
 
 
 CREATE TRIGGER `tr_update_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se actualizo'
-CREATE TRIGGER `tr_update_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
-CREATE TRIGGER `tr_update_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` SET `Fecha`= now.default;
+CREATE TRIGGER `tr_update2_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
+CREATE TRIGGER `tr_update3_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` SET `Fecha`= now.default
+CREATE TRIGGER `tr_update4_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Acualizada de tabla Usuario'
 
 
+CREATE TRIGGER `tr_delete_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se elimino'
+CREATE TRIGGER `tr_delete2_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
+CREATE TRIGGER `tr_delete3_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
+CREATE TRIGGER `tr_update4_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Eliminado de tabla Usuario'
+
+CREATE TRIGGER `tr_update5_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se actualizo'
+CREATE TRIGGER `tr_update6_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Autor
+CREATE TRIGGER `tr_update7_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
+CREATE TRIGGER `tr_update8_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Acualizada de tabla Historia'
+
+CREATE TRIGGER `tr_delete5_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se elimino'
+CREATE TRIGGER `tr_delete6_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Autor
+CREATE TRIGGER `tr_delete7_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
+CREATE TRIGGER `tr_update8_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Eliminado de tabla Historia'
+
+CREATE TRIGGER `tr_update9_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se actualizo'
+CREATE TRIGGER `tr_update10_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
+CREATE TRIGGER `tr_update11_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
+CREATE TRIGGER `tr_update12_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Acualizada de tabla Registro'
+
+CREATE TRIGGER `tr_delete9_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se elimino'
+CREATE TRIGGER `tr_delete10_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
+CREATE TRIGGER `tr_delete11_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
+CREATE TRIGGER `tr_update12_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Eliminado de tabla Registro'
 
 
 insert into Usuario values('Tabo style','tabo_style@outlook',43,'México','Qro',default,78,'sha1');
