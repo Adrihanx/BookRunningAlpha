@@ -52,7 +52,7 @@ create database BookRunning;
 	);
 
 	
-	<--- gfgfgfg --->
+	<--- gfgfgfgfg --->
 
 
 CREATE TRIGGER `tr_update_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se actualizo'
