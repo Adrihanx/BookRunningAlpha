@@ -1,108 +1,137 @@
-drop database if exists BookRunning;
+	drop database if exists BookRunning;
 
-create database BookRunning;
-	use BookRunning;
-	create table Bitacora(
-		Id_Bitacora int NOT NULL AUTO_INCREMENT,
-		NombredeUsuario varchar(30) default 'no root',
-		Fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-		Accion varchar(20),
-		ValorActualizado varchar(30) null,
-		ValorEliminado varchar(30) null,
-		TablaAccion varchar(30) null,
-		PRIMARY KEY (Id_Bitacora)
-	);
-	create table Usuario(
-		Nombre_Usuario varchar(30),
-		Correo varchar(60),
-		Edad int,
-		Pais varchar(30),
-		Estado varchar(30),
-		surs_Imagen varchar(30) default './default.jpg',
-		Peso int,
-		Contrasenia char(32),
-		primary key (Nombre_Usuario)
-	);
+	create database BookRunning;
+		use BookRunning;
+		create table Bitacora(
+			Id_Bitacora int NOT NULL AUTO_INCREMENT,
+			NombredeUsuario varchar(30) default 'no root',
+			Fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+			Accion varchar(20),
+			ValorActualizado int null,
+			ValorEliminado varchar(30) null,
+			TablaAccion varchar(30) null,
+			PRIMARY KEY (Id_Bitacora)
+		);
+		create table Usuario(
+			id_Usuario int,
+			Nombre_Usuario varchar(30),
+			Correo varchar(60),
+			Edad int,
+			Pais varchar(30),
+			Estado varchar(30),
+			surs_Imagen varchar(30) default './default.jpg',
+			Peso int,
+			Contrasenia char(32),
+			primary key (id_Usuario)
+		);
 
-	create table Historia(
-		id_Historia int NOT NULL AUTO_INCREMENT,
-		Duracion time,
-		Genero varchar(30),
-		Autor varchar(30),
-		Sinopsis text,
-		src_Audio varchar(20)default './default.mp3',
-		No_Nivel int default 0,
-		Vel_Minima int,
-		Objetivo text,
-		primary key (id_Historia)
-	);
+		create table Historia(
+			id_Historia int NOT NULL AUTO_INCREMENT,
+			Duracion time,
+			Genero varchar(30),
+			Autor varchar(30),
+			Sinopsis text,
+			src_Audio varchar(20)default './default.mp3',
+			No_Nivel int default 0,
+			Vel_Minima int,
+			Objetivo text,
+			primary key (id_Historia)
+		);
 
-	
+		
 
-	create table Registro(
-		id_Registro int NOT NULL AUTO_INCREMENT,
-		Nombre_Usuario varchar(30),
-		Fecha date,
-		Km_recoridos int,
-		No_Nivel int,
-		Vel_Min int,
-		Vel_Max int,
-		Cal_Quemadas int,
-		primary key(id_Registro),
-		foreign key (Nombre_Usuario) references Usuario(Nombre_Usuario)
-	);
+		create table Registro(
+			id_Registro int NOT NULL AUTO_INCREMENT,
+			id_Usuario int,
+			Fecha date,
+			Km_recoridos int,
+			No_Nivel int,
+			Vel_Min int,
+			Vel_Max int,
+			Cal_Quemadas int,
+			primary key(id_Registro),
+			foreign key (id_Usuario) references Usuario(id_Usuario)
+		);
 
-	
-	<--- gfgfgfgfg --->
+    delimiter //
+    CREATE TRIGGER trInstH AFTER INSERT ON Historia
+           FOR EACH ROW BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Insertar',NOW.id_Historia,'Historia');
+           END;//
+    delimiter ;
+    delimiter //
+    CREATE TRIGGER trUpdH AFTER UPDATE ON Historia
+           FOR EACH ROW
+           BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Actualizar',NOW.id_Historia,'Historia');
+           END;//
+    delimiter ;
 
+    delimiter //
+    CREATE TRIGGER trDelH AFTER DELETE ON Historia
+           FOR EACH ROW
+           BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Eliminar',OLD.id_Historia,'Historia');
+           END; //
+    delimiter ;
+    delimiter //
+    CREATE TRIGGER trInstU AFTER INSERT ON Usuario
+           FOR EACH ROW BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Insertar',NOW.id_Usuario,'Usuario');
+           END;//
+    delimiter ;
+    delimiter //
+    CREATE TRIGGER trUpdU AFTER UPDATE ON Usuario
+           FOR EACH ROW
+           BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Actualizar',NOW.id_Usuario,'Usuario');
+           END;//
+    delimiter ;
 
-CREATE TRIGGER `tr_update_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se actualizo'
-CREATE TRIGGER `tr_update2_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
-CREATE TRIGGER `tr_update3_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` SET `Fecha`= now.default
-CREATE TRIGGER `tr_update4_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Acualizada de tabla Usuario'
+    delimiter //
+    CREATE TRIGGER trDelU AFTER DELETE ON Usuario
+           FOR EACH ROW
+           BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Eliminar',OLD.id_Usuario,'Usuario');
+           END; //
+    delimiter ;
 
+    delimiter //
+    CREATE TRIGGER trInstR AFTER INSERT ON Registro
+           FOR EACH ROW BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Insertar',NOW.id_Registro,'Historia');
+           END;//
+    delimiter ;
+    delimiter //
+    CREATE TRIGGER trUpdR AFTER UPDATE ON Registro
+           FOR EACH ROW
+           BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Actualizar',NOW.id_Registro,'Historia');
+           END;//
+    delimiter ;
 
-CREATE TRIGGER `tr_delete_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se elimino'
-CREATE TRIGGER `tr_delete2_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
-CREATE TRIGGER `tr_delete3_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
-CREATE TRIGGER `tr_update4_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Eliminado de tabla Usuario'
+    delimiter //
+    CREATE TRIGGER trDelR AFTER DELETE ON Registro
+           FOR EACH ROW
+           BEGIN
+                insert into Bitacora (Fecha,Accion,ValorActualizado,TablaAccion) values (NOW(),'Eliminar',OLD.id_Registro,'Historia');
+           END; //
+    delimiter ;
+	insert into Usuario values(1,'Tabo style','tabo_style@outlook',43,'M?ico','Qro',default,78,md5('Rammstein'));
+	insert into Usuario values(2,'Laura Marin','Laura123@outlook',26,'M?ico','Qro',default,59,md5('potato'));
+	insert into Usuario values(3,'Daniel Macotela','Daniel_117@outlook',19,'M?ico','Qro',default,80,md5('manco'));
+	insert into Usuario values(4,'Adrihanx','Adrihanx@outlook',30,'M?ico','Qro',default,74,md5('anakaren'));
+	insert into Usuario values(5,'Gerardo San','gerardo@outlook',22,'M?ico','Qro',default,78,md5('daniela'));
+		insert into Historia (id_Historia) values(3743);
+	insert into Historia values(3743,'3:31','Terror','Guillermo.G','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
+	insert into Historia values(4152,'10:02','Suspenso','Andre.R','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
+	insert into Historia values(5248,'8:32','Suspenso','Roberto.D','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
+	insert into Historia values(3409,'12:50','Romantica','Angelica.M','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
+	insert into Historia values(3710,'13:09','terror','Emilio.C','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
 
-CREATE TRIGGER `tr_update5_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se actualizo'
-CREATE TRIGGER `tr_update6_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Autor
-CREATE TRIGGER `tr_update7_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
-CREATE TRIGGER `tr_update8_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Acualizada de tabla Historia'
-
-CREATE TRIGGER `tr_delete5_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se elimino'
-CREATE TRIGGER `tr_delete6_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Autor
-CREATE TRIGGER `tr_delete7_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
-CREATE TRIGGER `tr_update8_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Eliminado de tabla Historia'
-
-CREATE TRIGGER `tr_update9_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se actualizo'
-CREATE TRIGGER `tr_update10_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
-CREATE TRIGGER `tr_update11_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
-CREATE TRIGGER `tr_update12_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Acualizada de tabla Registro'
-
-CREATE TRIGGER `tr_delete9_Bitacora` BEFORE DELETE ON `historia` FOR EACH ROW UPDATE bitacora set Accion = 'Se elimino'
-CREATE TRIGGER `tr_delete10_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set ValorActualizado = now.Nombre_Usuario
-CREATE TRIGGER `tr_delete11_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE `bitacora` set `Fecha`= now.default
-CREATE TRIGGER `tr_update12_Bitacora` BEFORE INSERT ON `historia` FOR EACH ROW UPDATE bitacora set TablaAccion = 'Eliminado de tabla Registro'
-
-
-insert into Usuario values('Tabo style','tabo_style@outlook',43,'México','Qro',default,78,'sha1');
-insert into Usuario values('Laura Marin','Laura123@outlook',26,'México','Qro',default,59,'sha1');
-insert into Usuario values('Daniel Macotela','Daniel_117@outlook',19,'México','Qro',default,80,'sha1');
-insert into Usuario values('Adrihanx','Adrihanx@outlook',30,'México','Qro',default,74,'sha1');
-insert into Usuario values('Gerardo San','gerardo@outlook',22,'México','Qro',default,78,'sha1');
-
-insert into Historia values(3743,'3:31','Terror','Guillermo.G','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
-insert into Historia values(4152,'10:02','Suspenso','Andre.R','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
-insert into Historia values(5248,'8:32','Suspenso','Roberto.D','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
-insert into Historia values(3409,'12:50','Romantica','Angelica.M','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
-insert into Historia values(3710,'13:09','terror','Emilio.C','esto es una Sinopsis',default,0,0,'superar la velosidad minima');
-
-insert into Registro values(15345,'Tabo style','03-03-2017',3,4,1.3,10,300);
-insert into Registro values(13784,'Laura Marin','12-03-2017',2,7,1.5,8.5,320);
-insert into Registro values(13783,'Daniel Macotela','21-01-2017',5,2,2.35,9.5,200);
-insert into Registro values(13782,'Adrihanx','15-03-2017',1,3,2.07,7.92,100);
-insert into Registro values(15344,'Gerardo San','08-02-2017',6,6,3.42,12,300);
+	insert into Registro values(15345,1,'03-03-2017',3,4,1.3,10,300);
+	insert into Registro values(13784,2,'12-03-2017',2,7,1.5,8.5,320);
+	insert into Registro values(13783,3,'21-01-2017',5,2,2.35,9.5,200);
+	insert into Registro values(13782,4,'15-03-2017',1,3,2.07,7.92,100);
+	insert into Registro values(15344,5,'08-02-2017',6,6,3.42,12,300);
 
